@@ -1,8 +1,8 @@
-﻿using ComputerStore.Infastructure.Interfaces.Base;
-using ComputerStore.Infastructure.Models.Identity;
+﻿using ComputerStore.Infastructure.DAOs.Identity;
+using ComputerStore.Infastructure.Interfaces.Base;
 
 namespace ComputerStore.Infastructure.Repositories;
-public interface IUserRepository : IRepository<User>
+public interface IUserRepository : IRepository<UserDao>
 {
-    Task<User> GetByEmailAsync(string email);
+    Task<UserDao> GetByEmailAsync(string email);
 }

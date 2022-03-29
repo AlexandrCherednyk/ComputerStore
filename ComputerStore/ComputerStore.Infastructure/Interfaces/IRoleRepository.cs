@@ -1,7 +1,7 @@
-﻿using ComputerStore.Infastructure.Interfaces.Base;
-using ComputerStore.Infastructure.Models.Identity;
+﻿using ComputerStore.Infastructure.DAOs.Identity;
+using ComputerStore.Infastructure.Interfaces.Base;
 
 namespace ComputerStore.Infastructure.Repositories;
-public interface IRoleRepository : IRepository<Role>
+public interface IRoleRepository : IRepository<RoleDao>
 {
 }

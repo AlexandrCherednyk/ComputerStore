@@ -1,29 +1,29 @@
-﻿using ComputerStore.Infastructure.Models.Identity;
+﻿using ComputerStore.Infastructure.DAOs.Identity;
 
 namespace ComputerStore.Infastructure.Repositories;
 public class RoleRepository : IRoleRepository
 {
-    public Task<Role> AddAsync(Role entity)
+    public Task<RoleDao> AddAsync(RoleDao entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(Role entity)
+    public Task DeleteAsync(RoleDao entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IReadOnlyList<Role>> GetAllAsync()
+    public Task<IReadOnlyList<RoleDao>> GetAllAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<Role> GetByIdAsync(int id)
+    public Task<RoleDao> GetByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(Role entity)
+    public Task UpdateAsync(RoleDao entity)
     {
         throw new NotImplementedException();
     }

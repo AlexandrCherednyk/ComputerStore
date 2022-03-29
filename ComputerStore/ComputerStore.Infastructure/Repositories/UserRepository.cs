@@ -1,34 +1,34 @@
-﻿using ComputerStore.Infastructure.Models.Identity;
+﻿using ComputerStore.Infastructure.DAOs.Identity;
 
 namespace ComputerStore.Infastructure.Repositories;
 public class UserRepository : IUserRepository
 {
-    public Task<User> AddAsync(User entity)
+    public Task<UserDao> AddAsync(UserDao entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAsync(User entity)
+    public Task DeleteAsync(UserDao entity)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IReadOnlyList<User>> GetAllAsync()
+    public Task<IReadOnlyList<UserDao>> GetAllAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> GetByEmailAsync(string email)
+    public Task<UserDao> GetByEmailAsync(string email)
     {
         throw new NotImplementedException();
     }
 
-    public Task<User> GetByIdAsync(int id)
+    public Task<UserDao> GetByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(User entity)
+    public Task UpdateAsync(UserDao entity)
     {
         throw new NotImplementedException();
     }
