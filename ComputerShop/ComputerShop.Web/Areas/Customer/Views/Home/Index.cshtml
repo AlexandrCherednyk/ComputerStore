@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@if (User.IsInRole("admin"))
+{
+    <div class="navbar">
+        <div class="navbar-nav">
+            <a class="btn btn-primary glyphicon glyphicon-hand-up" asp-area="Admin" asp-controller="Manufacturer" asp-action="AddManufacturer">Add manufacturer</a>
+        </div>
+    </div>
+}
+
+<div>
+    <a class="row text-decoration-none bg-gray" asp-area="Customer" asp-controller="MotherBoard" asp-action="Index">
+        <div class="m-4">
+            <b>Motherboards</b>
+        </div>
+    </a>
+
+    <a class="row text-decoration-none bg-secondary" asp-area="Customer" asp-controller="Processor" asp-action="Index">
+        <div class="m-4">
+            <b>Processors</b>
+        </div>
+    </a>
+
+    <a class="row text-decoration-none bg-gray" asp-area="Customer" asp-controller="PowerSupply" asp-action="Index">
+        <div class="m-4">
+            <b>Power Supplies</b>
+        </div>
+    </a>
+
+    <a class="row text-decoration-none bg-secondary" asp-area="Customer" asp-controller="VideoCard" asp-action="Index">
+        <div class="m-4">
+            <b>Video cards</b>
+        </div>
+    </a>
+
+    <a class="row text-decoration-none bg-gray" asp-area="Customer" asp-controller="Ram" asp-action="Index">
+        <div class="m-4">
+            <b>RAM</b>
+        </div>
+    </a>
+</div>
+
+

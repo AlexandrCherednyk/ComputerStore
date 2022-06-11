@@ -1,0 +1,203 @@
+CREATE DATABASE IF NOT EXISTS Computer_Store;
+
+Use Computer_Store;
+
+CREATE TABLE IF NOT EXISTS `Role` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `User` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Email VARCHAR(255) NOT NULL,
+    PasswordHash VARCHAR(255) NOT NULL,
+    PasswordSalt VARCHAR(255) NOT NULL,
+    RoleId INT NOT NULL,
+    PRIMARY KEY(ID),
+	CONSTRAINT fk_Users_Role FOREIGN KEY (RoleId) REFERENCES Role (ID)
+);
+
+CREATE TABLE IF NOT EXISTS `Type` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `Manufacturer` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `Product` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    Description VARCHAR(255) NULL,
+    TypeID INT NOT NULL,
+    ManufacturerID INT NOT NULL,
+    Price DECIMAL NOT NULL,
+    Count INT NOT NULL,
+    PRIMARY KEY(ID),
+    CONSTRAINT fk_Products_Type FOREIGN KEY (TypeID) REFERENCES `Type` (ID),
+    CONSTRAINT fk_Products_Manufacturer FOREIGN KEY (ManufacturerID) REFERENCES `Manufacturer` (ID)
+);
+
+CREATE TABLE IF NOT EXISTS `Input` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    ProductID INT NOT NULL,
+    Count INT NOT NULL,
+    Time TIMESTAMP NOT NULL,
+    PRIMARY KEY(ID),
+    Constraint fk_Inputs_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID)
+);
+
+CREATE TABLE IF NOT EXISTS `Output` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    ProductID INT NOT NULL,
+    Count INT NOT NULL,
+    Time TIMESTAMP NOT NULL,
+    UserID INT NOT NULL, 
+    PRIMARY KEY(ID),
+    Constraint fk_Outputs_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID),
+    Constraint fk_Outputs_User FOREIGN KEY (UserID) REFERENCES `User` (ID)
+);
+
+CREATE TABLE IF NOT EXISTS `Socket` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `MemorySupport` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `FormFactor` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS  `Motherboard` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    ProductID INT NOT NULL,
+    SocketID INT NOT NULL,
+    MemorySupportID INT NOT NULL,
+    FormFactorID INT NOT NULL,
+    PRIMARY KEY(ID),
+    CONSTRAINT fk_Motherboards_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID),
+    CONSTRAINT fk_Motherboards_Socket FOREIGN KEY (SocketID) REFERENCES `Socket` (ID),
+    CONSTRAINT fk_Motherboards_MemorySupport FOREIGN KEY (MemorySupportID) REFERENCES `MemorySupport` (ID),
+    CONSTRAINT fk_Motherboards_FormFactor FOREIGN KEY (FormFactorID) REFERENCES `FormFactor` (ID)
+);
+
+CREATE TABLE IF NOT EXISTS `ProcessorFamily` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `CoresNumber` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Count INT NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `ClockFrequency` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Number INT NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS  `Processor` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    ProductID INT NOT NULL,
+    ProcessorFamilyID INT NOT NULL,
+    CoresNumberID INT NOT NULL,
+    ClockFrequencyID INT NOT NULL,
+    PRIMARY KEY(ID),
+    CONSTRAINT fk_Processors_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID),
+    CONSTRAINT fk_Processors_ProcessorFamily FOREIGN KEY (ProcessorFamilyID) REFERENCES `ProcessorFamily` (ID),
+    CONSTRAINT fk_Processors_CoresNumber FOREIGN KEY (CoresNumberID) REFERENCES `CoresNumber` (ID),
+    CONSTRAINT fk_Processors_ClockFrequency FOREIGN KEY (ClockFrequencyID) REFERENCES `ClockFrequency` (ID)
+);
+
+CREATE TABLE IF NOT EXISTS `Power` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Number INT NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS  `PowerSupply` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    ProductID INT NOT NULL,
+    PowerID INT NOT NULL,
+    PRIMARY KEY(ID),
+    CONSTRAINT fk_PowerSupplies_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID),
+    CONSTRAINT fk_PowerSupplies_Power FOREIGN KEY (PowerID) REFERENCES `Power` (ID)
+);
+
+CREATE TABLE IF NOT EXISTS `GraphicsChip` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `VideoCardMemory` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Number INT NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `VideoCardMemoryType` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS  `VideoCard` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    ProductID INT NOT NULL,
+    GraphicsChipID INT NOT NULL,
+    VideoCardMemoryID INT NOT NULL,
+    VideoCardMemoryTypeID INT NOT NULL,
+    PRIMARY KEY(ID),
+    CONSTRAINT fk_VideoCards_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID),
+    CONSTRAINT fk_VideoCards_GraphicsChip FOREIGN KEY (GraphicsChipID) REFERENCES `GraphicsChip` (ID),
+    CONSTRAINT fk_VideoCards_VideoCardMemory FOREIGN KEY (VideoCardMemoryID) REFERENCES `VideoCardMemory` (ID),
+    CONSTRAINT fk_VideoCards_VideoCardMemoryType FOREIGN KEY (VideoCardMemoryTypeID) REFERENCES `VideoCardMemoryType` (ID)
+);
+
+CREATE TABLE IF NOT EXISTS `RamMemory` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Number INT NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `RamMemoryType` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS `MemoryFrequency` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Number INT NOT NULL,
+    PRIMARY KEY(ID)
+);
+
+CREATE TABLE IF NOT EXISTS  `Ram` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    ProductID INT NOT NULL,
+    RamMemoryID INT NOT NULL,
+    RamMemoryTypeID INT NOT NULL,
+    MemoryFrequencyID INT NOT NULL,
+    PRIMARY KEY(ID),
+    CONSTRAINT fk_Rams_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID),
+    CONSTRAINT fk_Rams_RamMemory FOREIGN KEY (RamMemoryID) REFERENCES `RamMemory` (ID),
+    CONSTRAINT fk_Rams_RamMemoryType FOREIGN KEY (RamMemoryTypeID) REFERENCES `RamMemoryType` (ID),
+    CONSTRAINT fk_Rams_MemoryFrequency FOREIGN KEY (MemoryFrequencyID) REFERENCES `MemoryFrequency` (ID)
+);

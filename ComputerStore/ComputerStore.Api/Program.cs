@@ -22,4 +22,33 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//Create Db if not exist.
+SeedDataBase();
+
 app.Run();
+
+void SeedDataBase()
+{
+    MySqlConnection connection = new MySqlConnection(builder?.Configuration.GetConnectionString("Sys"));
+
+    string script = File.ReadAllText("Queries/SeedComputerStoreDb.sql");
+
+    MySqlCommand seedCommand = new MySqlCommand(script, connection);
+
+    try
+    {
+        connection.Open();
+        seedCommand.ExecuteNonQuery();
+    }
+    catch (Exception ex)
+    {
+        //TODO: logging.
+    }
+    finally
+    {
+        if (connection.State == ConnectionState.Open)
+        {
+            connection.Close();
+        }
+    }
+}

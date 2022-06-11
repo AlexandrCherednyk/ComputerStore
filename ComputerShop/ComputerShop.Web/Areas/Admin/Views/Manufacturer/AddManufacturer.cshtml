@@ -1,0 +1,21 @@
+﻿@model Manufacturer
+
+<div>
+    <form method="post" asp-action="AddManufacturer" asp-controller="Manufacturer" asp-area="Admin" asp-anti-forgery="true">
+        <h2 class="text-center mb-4">Add Manufacturer</h2>
+
+        <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+        <div>
+
+            <div class="col-4 mb-4">
+                <input type="text" asp-for="Name" id="manufacturer-name" class="form-control" />
+                <label asp-for="Name" class="form-label" id="manufacturer-name-label">Manufacturer name</label>
+                <span asp-validation-for="Name" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
+
+        </div>
+    </form>
+</div>

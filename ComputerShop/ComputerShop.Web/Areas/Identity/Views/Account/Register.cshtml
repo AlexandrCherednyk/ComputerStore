@@ -1,0 +1,37 @@
+﻿@model RegisterModel
+ 
+ <div class="row align-items-center h-100">
+    <form method="post" asp-action="Register" asp-controller="Account" asp-area="Identity" asp-anti-forgery="true" class="col-4 mx-auto">
+
+        <h2 class="text-center">Register</h2>
+
+        <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+        <div>
+            <div class="form-outline mb-4">
+                <input type="email" asp-for="Email" id="emil" class="form-control"/>
+                <label asp-for="Email" class="form-label" id="emil">Email</label>
+                <span asp-validation-for="Email" />
+            </div>
+
+            <div class="form-outline mb-4">
+                <input type="password" asp-for="Password" id="password" class="form-control"/>
+                <label asp-for="Password" class="form-label" for="password">Password</label>
+                <span asp-validation-for="Password" />
+            </div>
+
+            <div class="form-outline mb-4">
+                <input type="password" asp-for="ConfirmPassword" id="confirm-password" class="form-control"/>
+                <label asp-for="ConfirmPassword" class="form-label" for="confirm-password">Confirm password</label>
+                <span asp-validation-for="ConfirmPassword" />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
+
+            <div class="text-center">
+                <p>Already a member? <a asp-action="Login" asp-controller="Account" asp-area="Identity">Login</a></p>
+            </div>
+
+        </div>
+    </form>
+</div>
