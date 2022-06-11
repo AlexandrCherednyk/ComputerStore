@@ -1,36 +1,35 @@
-﻿namespace ComputerShop.Web.Areas.Admin.Controllers
+﻿namespace ComputerShop.Web.Areas.Admin.Controllers;
+
+[Authorize(Roles = "admin")]
+public class ManufacturerController : Controller
 {
-    [Authorize(Roles = "admin")]
-    public class ManufacturerController: Controller
+    private readonly IManufacturerRepository _manufacturerRepository;
+
+    public ManufacturerController(IManufacturerRepository manufacturerRepository)
     {
-        private readonly IManufacturerRepository _manufacturerRepository;
+        _manufacturerRepository = manufacturerRepository;
+    }
 
-        public ManufacturerController(IManufacturerRepository manufacturerRepository)
+    [HttpGet]
+    public IActionResult AddManufacturer()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddManufacturer(Manufacturer manufacturer)
+    {
+        if (ModelState.IsValid)
         {
-            _manufacturerRepository = manufacturerRepository;
-        }
+            await _manufacturerRepository.AddManufacturer(manufacturer.Name);
 
-        [HttpGet]
-        public IActionResult AddManufacturer()
+            return RedirectToAction("Index", "Home", new { area = "Customer" });
+        }
+        else
         {
-            return View();
+            ModelState.AddModelError("", "Invalid manufacturer");
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddManufacturer(Manufacturer model)
-        {
-            if (ModelState.IsValid)
-            {
-                await _manufacturerRepository.AddManufacturer(model);
-
-                return RedirectToAction("Index", "Home", new { area = "Customer" });
-            }
-            else
-            {
-                ModelState.AddModelError("", "Invalid manufacturer");
-            }
-            return View(model);
-        }
+        return View(manufacturer);
     }
 }

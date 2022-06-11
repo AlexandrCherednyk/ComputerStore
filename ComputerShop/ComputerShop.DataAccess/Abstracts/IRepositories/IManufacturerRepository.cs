@@ -1,7 +1,6 @@
-﻿namespace ComputerShop.DataAccess.Abstracts.IRepositories
+﻿namespace ComputerShop.DataAccess.Abstracts.IRepositories;
+
+public interface IManufacturerRepository
 {
-    public interface IManufacturerRepository
-    {
-        Task AddManufacturer(Manufacturer manufacturer);
-    }
+    Task AddManufacturer(string name);
 }

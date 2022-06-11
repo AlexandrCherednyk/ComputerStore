@@ -1,10 +1,10 @@
 ﻿namespace ComputerShop.DataAccess.Repositories;
 
-public class ManufacturerRepository : IManufacturerRepository
+public class ProductTypeRepository : IProductTypeRepository
 {
-    public async Task AddManufacturer(string name)
+    public async Task AddProductType(string name)
     {
-        string procedure = StoredProcedures.ADD_MANUFACTURER;
+        string procedure = StoredProcedures.ADD_TYPE;
 
         using (MySqlConnection connection = new(DbContext.CONNECTION))
         {

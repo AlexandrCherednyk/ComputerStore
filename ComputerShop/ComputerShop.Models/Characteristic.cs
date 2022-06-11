@@ -1,10 +1,8 @@
 ﻿namespace ComputerShop.Models;
 
-public class Manufacturer
+public class Characteristic
 {
     public int ID { get; set; }
-
-    [Required]
-    [MaxLength(50)]
     public string Name { get; set; }
+    public string Value { get; set; }
 }

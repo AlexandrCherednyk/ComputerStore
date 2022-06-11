@@ -18,8 +18,4 @@
     <ProjectReference Include="..\ComputerShop.Utils\ComputerShop.Utils.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Customer\ViewModels\" />
-  </ItemGroup>
-
 </Project>

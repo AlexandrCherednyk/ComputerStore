@@ -25,16 +25,23 @@ CREATE TABLE `Manufacturer` (
     PRIMARY KEY(ID)
 );
 
+CREATE TABLE `Type` (
+	ID INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    PRIMARY KEY(ID)
+);
+
 CREATE TABLE `Product` (
 	ID INT NOT NULL AUTO_INCREMENT,
     Name VARCHAR(255) NOT NULL,
     Description VARCHAR(255) NULL,
-    Type INT NOT NULL,
+    TypeID INT NOT NULL,
     ManufacturerID INT NOT NULL,
     Price DECIMAL NOT NULL,
     Count INT NOT NULL,
     PRIMARY KEY(ID),
-    CONSTRAINT fk_Products_Manufacturer FOREIGN KEY (ManufacturerID) REFERENCES `Manufacturer` (ID)
+    CONSTRAINT fk_Products_Manufacturer FOREIGN KEY (ManufacturerID) REFERENCES `Manufacturer` (ID),
+    CONSTRAINT fk_Products_Type FOREIGN KEY (TypeID) REFERENCES `Type` (ID)
 );
 
 CREATE TABLE `Input` (
@@ -57,50 +64,11 @@ CREATE TABLE `Output` (
     Constraint fk_Outputs_User FOREIGN KEY (UserID) REFERENCES `User` (ID)
 );
 
-CREATE TABLE `Motherboard` (
+CREATE TABLE `Characteristic` (
 	ID INT NOT NULL AUTO_INCREMENT,
     ProductID INT NOT NULL,
-    Socket VARCHAR(255) NOT NULL,
-    MemorySupport VARCHAR(255) NOT NULL,
-    FormFactor VARCHAR(255) NOT NULL,
+    Name VARCHAR(255),
+    Value VARCHAR(255),
     PRIMARY KEY(ID),
-    CONSTRAINT fk_Motherboards_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID)
-);
-
-CREATE TABLE `Processor` (
-	ID INT NOT NULL AUTO_INCREMENT,
-    ProductID INT NOT NULL,
-    ProcessorFamily VARCHAR(255) NOT NULL,
-    CoresNumber INT NOT NULL,
-    ClockFrequency INT NOT NULL,
-    PRIMARY KEY(ID),
-    CONSTRAINT fk_Processors_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID)
-);
-
-CREATE TABLE `PowerSupply` (
-	ID INT NOT NULL AUTO_INCREMENT,
-    ProductID INT NOT NULL,
-    Power INT NOT NULL,
-    PRIMARY KEY(ID),
-    CONSTRAINT fk_PowerSupplies_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID)
-);
-
-CREATE TABLE `VideoCard` (
-	ID INT NOT NULL AUTO_INCREMENT,
-    ProductID INT NOT NULL,
-    GraphicsChip VARCHAR(255) NOT NULL,
-    VideoCardMemory INT NOT NULL,
-    VideoCardMemoryType VARCHAR(255) NOT NULL,
-    PRIMARY KEY(ID),
-    CONSTRAINT fk_VideoCards_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID)
-);
-
-CREATE TABLE `Ram` (
-	ID INT NOT NULL AUTO_INCREMENT,
-    ProductID INT NOT NULL,
-    Memory INT NOT NULL,
-    MemoryType VARCHAR(255) NOT NULL,
-    MemoryFrequency INT NOT NULL,
-    PRIMARY KEY(ID),
-    CONSTRAINT fk_Rams_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID)
+    Constraint fk_Characteristics_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID)
 );

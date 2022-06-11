@@ -12,6 +12,3 @@ LOCK TABLES `Manufacturer` WRITE;
 INSERT INTO `computer_store`.`Manufacturer` (`Name`) VALUES ('Ukraine');
 UNLOCK TABLES;
 
-LOCK TABLES `Product` WRITE;
-INSERT INTO `computer_store`.`Product` (`Name`, `Description`, `Type`, `ManufacturerID`, `Price`, `Count`) VALUES ('IPhone', 'Something', 1, 1, 200, 20);
-UNLOCK TABLES;

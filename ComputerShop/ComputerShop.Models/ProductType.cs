@@ -1,10 +1,7 @@
 ﻿namespace ComputerShop.Models;
 
-public class Manufacturer
+public class ProductType
 {
     public int ID { get; set; }
-
-    [Required]
-    [MaxLength(50)]
     public string Name { get; set; }
 }

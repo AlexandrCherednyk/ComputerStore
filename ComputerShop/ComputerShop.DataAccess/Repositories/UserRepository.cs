@@ -1,91 +1,90 @@
-﻿namespace ComputerShop.DataAccess.Repositories
+﻿namespace ComputerShop.DataAccess.Repositories;
+
+public class UserRepository : IUserRepository
 {
-    public class UserRepository : IUserRepository
+    public async Task<User?> GetUserByEmailAsync(string email)
     {
-        public async Task<User?> GetUserByEmailAsync(string email)
+        User? user = null;
+
+        string procedure = StoredProcedures.GET_USER;
+
+        using (MySqlConnection connection = new(DbContext.CONNECTION))
         {
-            User? user = null;
+            await connection.OpenAsync();
 
-            string procedure = StoredProcedures.GET_USER;
+            MySqlCommand command = new(procedure, connection);
 
-            using(MySqlConnection connection = new(DbContext.CONNECTION))
+            command.CommandType = CommandType.StoredProcedure;
+
+            MySqlParameter emailParam = new()
             {
-                await connection.OpenAsync();
+                ParameterName = "email",
+                Value = email
+            };
 
-                MySqlCommand command = new(procedure, connection);
+            command.Parameters.Add(emailParam);
 
-                command.CommandType = CommandType.StoredProcedure;
+            MySqlDataReader reader = command.ExecuteReader();
 
-                MySqlParameter emailParam = new()
+            if (reader.HasRows)
+            {
+                //Read the first record in db.
+                reader.Read();
+
+                int userID = (int)reader.GetValue(0);
+                string userEmail = (string)reader.GetValue(1);
+                string userPasswordHash = (string)reader.GetValue(2);
+
+                int roleID = (int)reader.GetValue(3);
+                string roleName = (string)reader.GetValue(4);
+
+                user = new()
                 {
-                    ParameterName = "email",
-                    Value = email
+                    ID = userID,
+                    Email = userEmail,
+                    PasswordHash = userPasswordHash,
                 };
 
-                command.Parameters.Add(emailParam);
-
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
+                user.Role = new()
                 {
-                    //Read the first record in db.
-                    reader.Read();
-
-                    int userID = (int)reader.GetValue(0);
-                    string userEmail = (string)reader.GetValue(1);
-                    string userPasswordHash = (string)reader.GetValue(2);
-
-                    int roleID = (int)reader.GetValue(3);
-                    string roleName = (string)reader.GetValue(4);
-
-                    user = new()
-                    {
-                        ID = userID,
-                        Email = userEmail,
-                        PasswordHash = userPasswordHash,
-                    };
-
-                    user.Role = new()
-                    {
-                        ID = roleID,
-                        Name = roleName,
-                    };
-                }
-
-                reader.Close();
+                    ID = roleID,
+                    Name = roleName,
+                };
             }
 
-            return user;
+            reader.Close();
         }
-        public async Task AddUserAsync(User user)
+
+        return user;
+    }
+    public async Task AddUserAsync(User user)
+    {
+        string procedure = StoredProcedures.ADD_USER;
+
+        using (MySqlConnection connection = new(DbContext.CONNECTION))
         {
-            string procedure = StoredProcedures.ADD_USER;
+            await connection.OpenAsync();
 
-            using (MySqlConnection connection = new(DbContext.CONNECTION))
+            MySqlCommand command = new(procedure, connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            MySqlParameter emailParam = new()
             {
-                await connection.OpenAsync();
+                ParameterName = "email",
+                Value = user.Email,
+            };
 
-                MySqlCommand command = new(procedure, connection);
+            MySqlParameter passwordHashParam = new()
+            {
+                ParameterName = "passwordHash",
+                Value = user.PasswordHash,
+            };
 
-                command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(emailParam);
+            command.Parameters.Add(passwordHashParam);
 
-                MySqlParameter emailParam = new()
-                {
-                    ParameterName = "email",
-                    Value = user.Email,
-                };
-
-                MySqlParameter passwordHashParam = new()
-                {
-                    ParameterName = "passwordHash",
-                    Value = user.PasswordHash,
-                };
-
-                command.Parameters.Add(emailParam);
-                command.Parameters.Add(passwordHashParam);
-
-                await command.ExecuteScalarAsync();
-            }
+            await command.ExecuteScalarAsync();
         }
     }
 }
