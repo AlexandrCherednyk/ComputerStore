@@ -9,21 +9,28 @@
 
         <div>
             <div class="form-outline mb-4">
-                <input type="email" asp-for="Email" id="emil" class="form-control"/>
-                <label asp-for="Email" class="form-label" id="emil">Email</label>
-                <span asp-validation-for="Email" />
+                <input type="email" asp-for="Email" id="emil" class="form-control" placeholder="Email"/>
+                <span asp-validation-for="Email" class="field-validation-error text-danger"/>
             </div>
 
             <div class="form-outline mb-4">
-                <input type="password" asp-for="Password" id="password" class="form-control"/>
-                <label asp-for="Password" class="form-label" for="password">Password</label>
-                <span asp-validation-for="Password" />
+                <input type="text" asp-for="Address" id="address" class="form-control" placeholder="Address"/>
+                <span asp-validation-for="Address" class="field-validation-error text-danger"/>
             </div>
 
             <div class="form-outline mb-4">
-                <input type="password" asp-for="ConfirmPassword" id="confirm-password" class="form-control"/>
-                <label asp-for="ConfirmPassword" class="form-label" for="confirm-password">Confirm password</label>
-                <span asp-validation-for="ConfirmPassword" />
+                <input type="text" asp-for="FullName" id="full-name" class="form-control" placeholder="Full name"/>
+                <span asp-validation-for="FullName" class="field-validation-error text-danger"/>
+            </div>
+
+            <div class="form-outline mb-4">
+                <input type="password" asp-for="Password" id="password" class="form-control" placeholder="Password"/>
+                <span asp-validation-for="Password" class="field-validation-error text-danger"/>
+            </div>
+
+            <div class="form-outline mb-4">
+                <input type="password" asp-for="ConfirmPassword" id="confirm-password" class="form-control" placeholder="Confirm password"/>
+                <span asp-validation-for="ConfirmPassword" class="field-validation-error text-danger"/>
             </div>
 
             <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
@@ -35,3 +42,7 @@
         </div>
     </form>
 </div>
+
+@section  Scripts{
+    @await Html.PartialAsync("/Views/Shared/_ValidationScriptsPartial.cshtml")
+}

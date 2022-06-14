@@ -25,4 +25,43 @@ public class ProductTypeRepository : IProductTypeRepository
             await command.ExecuteScalarAsync();
         }
     }
+
+    public async Task<List<ProductType>> GetProductTypeList()
+    {
+        List<ProductType> types = new();
+
+        string procedure = StoredProcedures.GET_TYPE;
+
+        using (MySqlConnection connection = new(DbContext.CONNECTION))
+        {
+            await connection.OpenAsync();
+
+            MySqlCommand command = new(procedure, connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            MySqlDataReader reader = command.ExecuteReader();
+
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    int ID = (int)reader.GetValue(0);
+                    string name = (string)reader.GetValue(1);
+
+                    ProductType type = new()
+                    {
+                        ID = ID,
+                        Name = name,
+                    };
+
+                    types.Add(type);
+                }
+            }
+
+            reader.Close();
+        }
+
+        return types;
+    }
 }

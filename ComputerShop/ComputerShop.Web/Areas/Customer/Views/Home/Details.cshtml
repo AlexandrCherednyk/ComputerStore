@@ -1,0 +1,90 @@
+﻿@model Product
+
+<div class="row mb-4">
+    <div class="col-md-8 row mx-auto">
+        <div class="col-8 card p-2">
+            <div class="card-img-wrapper details-image-item mb-4">
+                <img class="card-img-top" src="@Model.PathToFile" alt="Product img." />
+            </div>
+
+            <div class="card-body">
+                Characteristics
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="input-group mb-3">
+                <span class="input-group-text">Name</span>
+                <input class="form-control" id="Name" name="Name" type="text" value="@Model.Name" disabled="">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Description</span>
+                <input class="form-control" id="Description" name="Description" type="text" value="@Model.Description" disabled="">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Type</span>
+                <input class="form-control" id="type-name" name="type-name" type="text" value="@Model.Type.Name" disabled="">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Manufacturer</span>
+                <input class="form-control" id="manufacturer-name" name="manufacturer-name" type="text" value="@Model.Manufacturer.Name" disabled="">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">$</span>
+                <input type="text" id="price" name="price" class="form-control" value="@Model.Price" disabled="" />
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Count</span>
+                <input class="form-control" id="count" name="count" type="text" value="@Model.Count" disabled="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <form class="col-6" method="post" asp-action="Buy" asp-controller="Home" asp-area="Customer" asp-anti-forgery="true">
+        <input name="productID" type="text" value="@Model.ID" hidden="" />
+
+        <div class="col-4 mx-auto">
+            <div class="input-group mb-3 col-2">
+                <span class="input-group-text">Count</span>
+                <input class="form-control" id="quantity" name="quantity" type="text" placeholder="0">
+            </div>
+            <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
+
+            <button type="submit" class="btn btn-primary btn-block mb-4">Buy</button>
+        </div>
+    </form>
+
+    @if (User.IsInRole("admin"))
+    {
+        <form class="col-6" method="post" asp-action="AddPurchase" asp-controller="Input" asp-area="Admin" asp-anti-forgery="true">
+            <input name="productID" type="text" value="@Model.ID" hidden="" />
+
+            <div class="col-4 mx-auto">
+                <div class="input-group mb-3 col-2">
+                    <span class="input-group-text">Count</span>
+                    <input class="form-control" id="quantity" name="quantity" type="text" placeholder="0">
+                </div>
+                <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
+
+                <button type="submit" class="btn btn-primary btn-block mb-4">Purchase</button>
+            </div>
+        </form>
+    }
+</div>
+
+@if (User.IsInRole("admin"))
+{
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <a class="text-decoration-none btn btn-primary btn-block mx-4" asp-area="Admin" asp-controller="Product" asp-action="Details" asp-route-id="@Model.ID">Update</a>
+            <a class="text-decoration-none btn btn-primary btn-block mx-4" asp-area="Admin" asp-controller="Product" asp-action="Remove" asp-route-id="@Model.ID">Remove</a>
+        </div>
+    </div>
+}

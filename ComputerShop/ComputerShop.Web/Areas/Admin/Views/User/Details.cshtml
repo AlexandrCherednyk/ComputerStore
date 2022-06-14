@@ -1,0 +1,33 @@
+﻿@model UserDetailsViewModel
+
+<div>
+    <form method="post" asp-action="Details" asp-controller="User" asp-area="Admin" asp-anti-forgery="true">
+        <h2 class="text-center mb-4">Update User</h2>
+
+        <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+        <div class="col-4 mx-auto">
+
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">ID</span>
+                    <input class="form-control" id="ID" name="ID" type="text" value="@Model.ID" disabled="">
+                    <input class="form-control" name="ID" type="hidden" value="@Model.ID">
+                </div>
+
+                <div class="mb-3 ">
+                    <input type="text" asp-for="Address" id="address" class="form-control" placeholder="Address" />
+                    <span asp-validation-for="Address" class="field-validation-error text-danger" />
+                </div>
+
+                <div class="mb-3 ">
+                    <input type="text" asp-for="FullName" id="fullName" class="form-control" placeholder="Full name" />
+                    <span asp-validation-for="FullName" class="field-validation-error text-danger" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mb-4">Update</button>
+
+        </div>
+    </form>
+</div>

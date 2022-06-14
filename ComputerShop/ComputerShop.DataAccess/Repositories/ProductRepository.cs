@@ -40,16 +40,32 @@ public class ProductRepository : IProductRepository
                 string manufacturerName = (string)reader.GetValue(6);
                 decimal price = (decimal)reader.GetValue(7);
                 int count = (int)reader.GetValue(8);
+                string pathToFile = (string)reader.GetValue(9);
 
-                product.ID = productID;
-                product.Name = name;
-                product.Description = description;
-                product.Type.ID = typeID;
-                product.Type.Name = typeName;
-                product.Manufacturer.ID = manufacturerID;
-                product.Manufacturer.Name = manufacturerName;
-                product.Price = price;
-                product.Count = count;
+                ProductType type = new()
+                {
+                    ID = typeID,
+                    Name = typeName,
+                };
+
+                Manufacturer manufacturer = new()
+                {
+                    ID = manufacturerID,
+                    Name = manufacturerName,
+                };
+
+                product = new()
+                {
+                    ID = productID,
+                    Name = name,
+                    Description = description,
+                    Type = type,
+                    Manufacturer = manufacturer,
+                    Price = price,
+                    Count = count,
+                    PathToFile = pathToFile,
+                };
+
             }
 
             reader.Close();
@@ -106,12 +122,19 @@ public class ProductRepository : IProductRepository
                 Value = product.Count,
             };
 
+            MySqlParameter pathToFIleParam = new()
+            {
+                ParameterName = "pathToFile",
+                Value = product.PathToFile,
+            };
+
             command.Parameters.Add(nameParam);
             command.Parameters.Add(descriptionParam);
             command.Parameters.Add(typeIDParam);
             command.Parameters.Add(manufacturerIDParam);
             command.Parameters.Add(priceParam);
             command.Parameters.Add(countParam);
+            command.Parameters.Add(pathToFIleParam);
 
             await command.ExecuteScalarAsync();
         }
@@ -161,6 +184,7 @@ public class ProductRepository : IProductRepository
                     string manufacturerName = (string)reader.GetValue(6);
                     decimal price = (decimal)reader.GetValue(7);
                     int count = (int)reader.GetValue(8);
+                    string pathToFile = (string)reader.GetValue(9);
 
                     ProductType type = new()
                     {
@@ -183,6 +207,7 @@ public class ProductRepository : IProductRepository
                         Manufacturer = manufacturer,
                         Price = price,
                         Count = count,
+                        PathToFile = pathToFile,
                     };
                     
                     products.Add(product);
@@ -223,5 +248,102 @@ public class ProductRepository : IProductRepository
         }
 
         return count;
+    }
+
+    public async Task UpdateProductAsync(Product product)
+    {
+        string procedure = StoredProcedures.UPDATE_PRODUCT;
+
+        using (MySqlConnection connection = new(DbContext.CONNECTION))
+        {
+            await connection.OpenAsync();
+
+            MySqlCommand command = new(procedure, connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            MySqlParameter IDParam = new()
+            {
+                ParameterName = "ID",
+                Value = product.ID,
+            };
+
+            MySqlParameter nameParam = new()
+            {
+                ParameterName = "name",
+                Value = product.Name,
+            };
+
+            MySqlParameter descriptionParam = new()
+            {
+                ParameterName = "description",
+                Value = product.Description,
+            };
+
+            MySqlParameter typeIDParam = new()
+            {
+                ParameterName = "typeID",
+                Value = product.Type.ID,
+            };
+
+            MySqlParameter manufacturerIDParam = new()
+            {
+                ParameterName = "manufacturerID",
+                Value = product.Manufacturer.ID,
+            };
+
+            MySqlParameter priceParam = new()
+            {
+                ParameterName = "price",
+                Value = product.Price,
+            };
+
+            MySqlParameter countParam = new()
+            {
+                ParameterName = "count",
+                Value = product.Count,
+            };
+
+            MySqlParameter pathToFIleParam = new()
+            {
+                ParameterName = "pathToFile",
+                Value = product.PathToFile,
+            };
+
+            command.Parameters.Add(IDParam);
+            command.Parameters.Add(nameParam);
+            command.Parameters.Add(descriptionParam);
+            command.Parameters.Add(typeIDParam);
+            command.Parameters.Add(manufacturerIDParam);
+            command.Parameters.Add(priceParam);
+            command.Parameters.Add(countParam);
+            command.Parameters.Add(pathToFIleParam);
+
+            await command.ExecuteScalarAsync();
+        }
+    }
+
+    public async Task RemoveProductAsync(int ID)
+    {
+        string procedure = StoredProcedures.REMOVE_PRODUCT;
+
+        using (MySqlConnection connection = new(DbContext.CONNECTION))
+        {
+            await connection.OpenAsync();
+
+            MySqlCommand command = new(procedure, connection);
+
+            command.CommandType = CommandType.StoredProcedure;
+
+            MySqlParameter IDParam = new()
+            {
+                ParameterName = "ID",
+                Value = ID,
+            };
+
+            command.Parameters.Add(IDParam);
+
+            await command.ExecuteScalarAsync();
+        }
     }
 }

@@ -3,4 +3,6 @@
 public interface IProductTypeRepository
 {
     Task AddProductType(string name);
+
+    Task<List<ProductType>> GetProductTypeList();
 }

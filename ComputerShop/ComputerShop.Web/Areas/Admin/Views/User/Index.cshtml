@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model List<User>
+
+<table class="table table-hover">
+
+  <thead>
+
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Email</th>
+      <th scope="col">Role</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+      @foreach(var item in Model)
+      {
+        <tr class="table-secondary">
+          <th scope="row">@item.ID</th>
+          <td>@item.Email</td>
+          <td>@item?.Role?.Name</td>
+          <td>
+              <div>
+                  @if (item?.Role?.Name == "user")
+                  {
+                    <a class="text-decoration-none" asp-area="Admin" asp-controller="User" asp-action="Details" asp-route-email="@item.Email">Edit</a>
+                    <a class="text-decoration-none mx-3" asp-area="Admin" asp-controller="User" asp-action="Remove" asp-route-id="@item.ID">Remove</a>
+                  }
+              </div>
+          </td>
+        </tr>
+      }
+        
+  </tbody>
+
+</table>

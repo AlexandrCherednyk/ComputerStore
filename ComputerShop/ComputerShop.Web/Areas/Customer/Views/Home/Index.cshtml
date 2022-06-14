@@ -6,34 +6,60 @@
 
 @if (User.IsInRole("admin"))
 {
-    <div class="navbar">
-        <div class="navbar-nav">
-            <a class="btn btn-primary glyphicon glyphicon-hand-up" asp-area="Admin" asp-controller="Manufacturer" asp-action="AddManufacturer">Add manufacturer</a>
-        </div>
+    <div class="row">
+        <div class="navbar col-6 mx-auto">
+            <div class="navbar-nav">
+                <a class="btn btn-primary glyphicon glyphicon-hand-up" asp-area="Admin" asp-controller="Manufacturer" asp-action="AddManufacturer">Add manufacturer</a>
+            </div>
 
-        <div class="navbar-nav">
-            <a class="btn btn-primary glyphicon glyphicon-hand-up" asp-area="Admin" asp-controller="Product" asp-action="AddProduct">Add product</a>
+            <div class="navbar-nav">
+                <a class="btn btn-primary glyphicon glyphicon-hand-up" asp-area="Admin" asp-controller="ProductType" asp-action="AddProductType">Add Type</a>
+            </div>
+
+            <div class="navbar-nav">
+                <a class="btn btn-primary glyphicon glyphicon-hand-up" asp-area="Admin" asp-controller="Product" asp-action="AddProduct">Add product</a>
+            </div>
         </div>
     </div>
 }
 
+<div class="row">
+    @foreach (var product in Model.Products)
+    {
+        <div class="col-lg-2 col-md-3 col-sm-6">
+            <div class="card mb-4">
+                <a class="text-decoration-none" asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@product.ID">
+                    <div class="card-img-wrapper">
+                        <img class="card-img-top" src="@product.PathToFile" alt="Product img." />
+                    </div>
 
+                    <div class="card-body scroll bg-secondary p-1 text-center">
+                        <h3 class="">
+                            @product.Name
+                        </h3>
+                    </div>
+
+                </a>
+            </div>
+        </div>
+    }
+</div>
 
 @if (Model.PageInfo.HasPreviousPage)
 {
     <a asp-area="Customer" asp-controller="Home" asp-action="Index"
-       asp-route-page="@(Model.PageInfo.PageNumber - 1)"
-       class="btn btn-outline-dark">
+   asp-route-page="@(Model.PageInfo.PageNumber - 1)"
+   class="btn btn-outline-dark">
         <i class="glyphicon glyphicon-chevron-left"></i>
-        Назад
+        Previous
     </a>
 }
 @if (Model.PageInfo.HasNextPage)
 {
     <a asp-area="Customer" asp-controller="Home" asp-action="Index"
-       asp-route-page="@(Model.PageInfo.PageNumber + 1)"
-       class="btn btn-outline-dark">
-        Вперед
+   asp-route-page="@(Model.PageInfo.PageNumber + 1)"
+   class="btn btn-outline-dark">
+        Next
         <i class="glyphicon glyphicon-chevron-right"></i>
     </a>
 }

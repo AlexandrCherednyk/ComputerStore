@@ -2,11 +2,17 @@
 
 public class RegisterModel
 {
-    [Required(ErrorMessage = "No email specified")]
+    [Required(ErrorMessage = "Please enter email.")]
     [EmailAddress]
     public string Email { get; set; }
 
-    [Required(ErrorMessage = "Тo password specified")]
+    [Required(ErrorMessage = "Please enter address.")]
+    public string Address { get; set; }
+
+    [Required(ErrorMessage = "Please enter full name.")]
+    public string FullName { get; set; }
+
+    [Required(ErrorMessage = "Please enter password.")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
 

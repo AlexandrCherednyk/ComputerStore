@@ -14,6 +14,8 @@ CREATE TABLE `User` (
 	ID INT NOT NULL AUTO_INCREMENT,
     Email VARCHAR(255) NOT NULL,
     PasswordHash VARCHAR(255) NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    FullName VARCHAR(255) NOT NULL,
     RoleID INT NOT NULL,
     PRIMARY KEY(ID),
 	CONSTRAINT fk_Users_Role FOREIGN KEY (RoleID) REFERENCES Role (ID)
@@ -39,6 +41,7 @@ CREATE TABLE `Product` (
     ManufacturerID INT NOT NULL,
     Price DECIMAL NOT NULL,
     Count INT NOT NULL,
+    PathToFile VARCHAR(255) NULL,
     PRIMARY KEY(ID),
     CONSTRAINT fk_Products_Manufacturer FOREIGN KEY (ManufacturerID) REFERENCES `Manufacturer` (ID),
     CONSTRAINT fk_Products_Type FOREIGN KEY (TypeID) REFERENCES `Type` (ID)
@@ -46,22 +49,23 @@ CREATE TABLE `Product` (
 
 CREATE TABLE `Input` (
 	ID INT NOT NULL AUTO_INCREMENT,
-    ProductID INT NOT NULL,
+    ProductID INT NULL,
     Count INT NOT NULL,
     Time TIMESTAMP NOT NULL,
     PRIMARY KEY(ID),
-    Constraint fk_Inputs_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID)
+    Constraint fk_Inputs_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID) ON DELETE SET NULL
 );
 
 CREATE TABLE `Output` (
 	ID INT NOT NULL AUTO_INCREMENT,
-    ProductID INT NOT NULL,
+    ProductID INT NULL,
     Count INT NOT NULL,
+    TotalPrice DECIMAL NULL,
     Time TIMESTAMP NOT NULL,
-    UserID INT NOT NULL, 
+    UserID INT NULL, 
     PRIMARY KEY(ID),
-    Constraint fk_Outputs_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID),
-    Constraint fk_Outputs_User FOREIGN KEY (UserID) REFERENCES `User` (ID)
+    Constraint fk_Outputs_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID) ON DELETE SET NULL,
+    Constraint fk_Outputs_User FOREIGN KEY (UserID) REFERENCES `User` (ID) ON DELETE SET NULL
 );
 
 CREATE TABLE `Characteristic` (

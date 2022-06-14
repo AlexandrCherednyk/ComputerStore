@@ -1,4 +1,6 @@
-﻿namespace ComputerShop.Web.Areas.Admin.Controllers;
+﻿using ComputerShop.Web.Areas.Admin.ViewModels;
+
+namespace ComputerShop.Web.Areas.Admin.Controllers;
 
 [Authorize(Roles = "admin")]
 public class ManufacturerController : Controller
@@ -18,7 +20,7 @@ public class ManufacturerController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> AddManufacturer(Manufacturer manufacturer)
+    public async Task<IActionResult> AddManufacturer(ManufacturerViewModel manufacturer)
     {
         if (ModelState.IsValid)
         {

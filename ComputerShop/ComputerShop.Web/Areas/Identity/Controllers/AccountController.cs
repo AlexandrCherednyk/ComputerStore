@@ -33,6 +33,8 @@ public class AccountController : Controller
                 {
                     Email = model.Email.ToLower(),
                     PasswordHash = hasher.HashToString(model.Password),
+                    Address = model.Address,
+                    FullName = model.FullName,
                 };
 
                 user.Role = new()

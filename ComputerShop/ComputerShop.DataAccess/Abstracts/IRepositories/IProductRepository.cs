@@ -6,4 +6,6 @@ public interface IProductRepository
     Task<List<Product>> GetProductsRangeAsync(int from, int to);
     Task<long> GetProductsCountAsync();
     Task AddProductAsync(Product product);
+    Task UpdateProductAsync(Product product);
+    Task RemoveProductAsync(int ID);
 }

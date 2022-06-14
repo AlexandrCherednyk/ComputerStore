@@ -29,6 +29,21 @@
                     </ul>
 
                     <ul class="navbar-nav">
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Output" asp-action="Index">Sales</a>
+                            </li> 
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Input" asp-action="Index">Purchases</a>
+                            </li> 
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="User" asp-action="Index">User panel</a>
+                            </li> 
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="Logout">Logout</a>
                         </li>
@@ -45,7 +60,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted mt-auto position-sticky">
         <div class="container">
             &copy; 2022 - ComputerShop
         </div>

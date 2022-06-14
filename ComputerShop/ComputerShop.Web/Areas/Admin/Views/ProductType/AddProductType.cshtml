@@ -1,15 +1,15 @@
-﻿@model ManufacturerViewModel
+﻿@model ProductTypeViewModel
 
 <div>
-    <form method="post" asp-action="AddManufacturer" asp-controller="Manufacturer" asp-area="Admin" asp-anti-forgery="true">
-        <h2 class="text-center mb-4">Add Manufacturer</h2>
+    <form method="post" asp-action="AddProductType" asp-controller="ProductType" asp-area="Admin" asp-anti-forgery="true">
+        <h2 class="text-center mb-4">Add Product Type</h2>
 
         <div class="validation text-danger" asp-validation-summary="ModelOnly"></div>
 
         <div>
 
             <div class="col-4 mb-4">
-                <input type="text" asp-for="Name" id="manufacturer-name" class="form-control" Placeholder="Name"/>
+                <input type="text" asp-for="Name" id="type-name" class="form-control" Placeholder="Name"/>
                 <span asp-validation-for="Name" class="field-validation-error text-danger"/>
             </div>
 
