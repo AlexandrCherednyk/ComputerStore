@@ -76,9 +76,26 @@ END;
 
 DROP PROCEDURE IF EXISTS `computer_store`.`add_product`;
 
-CREATE PROCEDURE `computer_store`.`add_product` (IN name VARCHAR(255), IN description VARCHAR(255), IN typeID INT, IN manufacturerID INT, IN price DECIMAL, IN count INT, IN pathToFile VARCHAR(255))
+CREATE PROCEDURE `computer_store`.`add_product` (OUT ID INT, IN name VARCHAR(255), IN description VARCHAR(255), IN typeID INT, IN manufacturerID INT, IN price DECIMAL, IN count INT, IN pathToFile VARCHAR(255))
 BEGIN 
 INSERT INTO `Product` (`Name`, `Description`, `TypeID`, `ManufacturerID`, `Price`, `Count`, `PathToFile`) values (name, description, typeID, manufacturerID, price, count, pathToFile);
+SELECT LAST_INSERT_ID() INTO ID;
+END;
+
+DROP PROCEDURE IF EXISTS `computer_store`.`add_characteristic`;
+
+CREATE PROCEDURE `computer_store`.`add_characteristic` (IN productID INT, IN name VARCHAR(255), IN value VARCHAR(255))
+BEGIN 
+INSERT INTO `Characteristic` (`ProductID`, `Name`, `Value`) values (productID, name, value);
+END;
+
+DROP PROCEDURE IF EXISTS `computer_store`.`get_characteristic`;
+
+CREATE PROCEDURE `computer_store`.`get_characteristic` (IN productID INT)
+BEGIN 
+SELECT `Characteristic`.`ID`, `Characteristic`.`ProductID`, `Characteristic`.`Name`, `Characteristic`.`Value`
+FROM `Characteristic`
+WHERE `Characteristic`.`ProductID` = productID;
 END;
 
 DROP PROCEDURE IF EXISTS `computer_store`.`get_product`;

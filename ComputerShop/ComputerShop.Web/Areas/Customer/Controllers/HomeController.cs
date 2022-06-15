@@ -44,6 +44,8 @@ public class HomeController : Controller
     {
         Product product = await _productRepository.GetProductByIDAsync(ID);
 
+        product.Characteristics = await _productRepository.GetCharactericticsAsync(product.ID);
+
         return View(product);
     }
 

@@ -51,24 +51,27 @@
                 <input class="form-control" asp-for="Image" name="Image" type="file" id="formFile">
             </div>
 
-            <div id="characteristics-block d-flex">
+            <div id="characteristics-block">
 
                 <h2 class="text-center my-4">Add Characteristics</h2>
 
                 <div class="book-item row mb-3">
                     <div class="col-6">
-                         <input type="text" name="Characterictics[0].Name" class="form-control" placeholder="Name"/>
+                         <input type="text" asp-for="Characteristics[0].Name" class="form-control" placeholder="Name"/>
                     </div>
 
                     <div class="col-6">
-                         <input type="text" name="Characterictics[0].Value" class="form-control" placeholder="Description"/>
+                         <input type="text" asp-for="Characteristics[0].Value" class="form-control" placeholder="Description"/>
                     </div>
                 </div>
 
             </div>
 
-            <p><a class="addLink">Добавить новый элемент</a></p>
-            
+            <div class="mb-4">
+                <button type="button" class="addInput btn btn-primary btn-block rounded-pill">+</button>
+                <button type="button" class="removeLink btn btn-primary btn-block rounded-pill mx-4">-</button>
+            </div>
+
             <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
 
         </div>
@@ -76,27 +79,34 @@
 </div>
 
 @section  Scripts{
-    @await Html.PartialAsync("/Views/Shared/_ValidationScriptsPartial.cshtml")
-
     <script>
        $(function () {
            var i = 0;
-           $('.addLink').click(function()
+           $('.addInput').click(function(e)
            {
                i++;
 
-                var htmlToAdd = "<div class='book-item row mb-3'>" +
+                var htmlToAdd = "<div class='" + i + "-characteristics book-item row mb-3'>" +
                     "<div class='col-6'>" +
-                         "<input type='text' name='Characterictics["+i+"].Name' class='form-control' placeholder='Name'/>" +
+                         "<input type='text' name='Characteristics["+i+"].Name' class='form-control' placeholder='Name'/>" +
                     "</div>" +
                     "<div class='col-6'>" +
-                         "<input type='text' name='Characterictics["+i+"].Value' class='form-control' placeholder='Description'/>" +
+                         "<input type='text' name='Characteristics["+i+"].Value' class='form-control' placeholder='Description'/>" +
                     "</div>" +
                 "</div>";
 
                $('#characteristics-block').append(htmlToAdd);
            })
+
+           $('.removeLink').click(function(e)
+           {
+               if(i>0){
+                   $('.'+ i + '-characteristics').remove();
+                   i--
+               }
+           })
        })
     </script>
- 
+
+    @await Html.PartialAsync("/Views/Shared/_ValidationScriptsPartial.cshtml")
 }

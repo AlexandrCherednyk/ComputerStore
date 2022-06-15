@@ -71,7 +71,7 @@ public class ProductController : Controller
                 ID = product.ManufacturerID,
             };
 
-            await _productRepository.AddProductAsync(new Product()
+            int productID = await _productRepository.AddProductAsync(new Product()
             {
                 Name = product.Name,
                 Description = product.Description,
@@ -81,6 +81,13 @@ public class ProductController : Controller
                 Count = product.Count,
                 PathToFile = imageUrl,
             });
+
+            foreach (Characteristic characteristic in product.Characteristics)
+            {
+                characteristic.ProductID = productID;
+
+                await _productRepository.AddCharactericticAsync(characteristic);
+            }
 
             return RedirectToAction("Index", "Home", new { area = "Customer" });
         }

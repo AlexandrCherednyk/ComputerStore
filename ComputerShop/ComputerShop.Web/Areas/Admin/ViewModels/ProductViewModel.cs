@@ -26,7 +26,7 @@
         [Required(ErrorMessage = "Please load product image.")]
         public IFormFile Image { get; set; }
 
-        //public IEnumerable<Characteristic> Characteristics { get; set; }
+        public List<Characteristic> Characteristics { get; set; } = new();
 
     }
 }

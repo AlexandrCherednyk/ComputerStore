@@ -5,7 +5,9 @@ public interface IProductRepository
     Task<Product> GetProductByIDAsync(int ID);
     Task<List<Product>> GetProductsRangeAsync(int from, int to);
     Task<long> GetProductsCountAsync();
-    Task AddProductAsync(Product product);
+    Task<int> AddProductAsync(Product product);
     Task UpdateProductAsync(Product product);
     Task RemoveProductAsync(int ID);
+    Task AddCharactericticAsync(Characteristic characteristic);
+    Task<List<Characteristic>> GetCharactericticsAsync(int productID);
 }

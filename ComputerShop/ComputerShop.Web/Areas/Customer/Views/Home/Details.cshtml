@@ -7,8 +7,13 @@
                 <img class="card-img-top" src="@Model.PathToFile" alt="Product img." />
             </div>
 
-            <div class="card-body">
-                Characteristics
+            <div>
+                @foreach(var c in Model.Characteristics)
+                {
+                    <div class="row">
+                        <p>@c.Name: @c.Value</p>
+                    </div>
+                }
             </div>
         </div>
 

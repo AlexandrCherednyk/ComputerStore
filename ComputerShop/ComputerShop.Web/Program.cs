@@ -47,6 +47,7 @@ app.UseEndpoints(endpoints =>
 CreateDataBaseShemas();
 SeedDb();
 CreateStoreProcedure();
+CreateTriggers();
 
 
 app.Run();
@@ -82,6 +83,32 @@ void CreateStoreProcedure()
     MySqlConnection connection = new MySqlConnection(builder?.Configuration.GetConnectionString("ComputerStore"));
 
     string script = File.ReadAllText("wwwroot/Queries/CreateStoredProcedures.sql");
+
+    MySqlCommand command = new MySqlCommand(script, connection);
+
+    try
+    {
+        connection.Open();
+        command.ExecuteNonQuery();
+    }
+    catch (Exception)
+    {
+        //TODO: logging.
+    }
+    finally
+    {
+        if (connection.State == ConnectionState.Open)
+        {
+            connection.Close();
+        }
+    }
+}
+
+void CreateTriggers()
+{
+    MySqlConnection connection = new MySqlConnection(builder?.Configuration.GetConnectionString("ComputerStore"));
+
+    string script = File.ReadAllText("wwwroot/Queries/CreateTriggers.sql");
 
     MySqlCommand command = new MySqlCommand(script, connection);
 

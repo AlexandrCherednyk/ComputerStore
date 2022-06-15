@@ -19,6 +19,9 @@ internal static class StoredProcedures
     internal const string UPDATE_PRODUCT = "update_product";
     internal const string REMOVE_PRODUCT = "remove_product";
 
+    internal const string ADD_CHARACTERISTIC = "add_characteristic";
+    internal const string GET_CHARACTERISTICS = "get_characteristic";
+
     internal const string GET_PRODUCT_RANGE = "get_product_range";
     internal const string PRODUCT_COUNT = "product_count";
 
