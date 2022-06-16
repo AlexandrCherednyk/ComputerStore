@@ -4,6 +4,17 @@
     ViewData["Title"] = "Home page";
 }
 
+<div>
+    <form method="get" asp-action="Index" asp-controller="Home" asp-area="Customer" asp-route-page="1" asp-anti-forgery="true">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-primary" type="submit">Search</button>
+            </div>
+            <input type="text" class="form-control" id="search" name="search" value="@Model.Search">
+        </div>
+    </form>
+</div>
+
 @if (User.IsInRole("admin"))
 {
     <div class="row">
@@ -49,6 +60,7 @@
 {
     <a asp-area="Customer" asp-controller="Home" asp-action="Index"
    asp-route-page="@(Model.PageInfo.PageNumber - 1)"
+   asp-route-search="@Model.Search"
    class="btn btn-outline-dark">
         <i class="glyphicon glyphicon-chevron-left"></i>
         Previous
@@ -58,6 +70,7 @@
 {
     <a asp-area="Customer" asp-controller="Home" asp-action="Index"
    asp-route-page="@(Model.PageInfo.PageNumber + 1)"
+   asp-route-search="@Model.Search"
    class="btn btn-outline-dark">
         Next
         <i class="glyphicon glyphicon-chevron-right"></i>

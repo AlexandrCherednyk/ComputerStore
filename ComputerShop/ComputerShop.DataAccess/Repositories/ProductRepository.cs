@@ -154,7 +154,7 @@ public class ProductRepository : IProductRepository
         return productID;
     }
 
-    public async Task<List<Product>> GetProductsRangeAsync(int from = 0, int to = 14)
+    public async Task<List<Product>> GetProductsRangeAsync(int from = 0, int to = 14, string search = "")
     {
         List<Product> products = new();
 
@@ -180,8 +180,15 @@ public class ProductRepository : IProductRepository
                 Value = to,
             };
 
+            MySqlParameter searchParam = new()
+            {
+                ParameterName = "search",
+                Value = search,
+            };
+
             command.Parameters.Add(fromParam);
             command.Parameters.Add(toParam);
+            command.Parameters.Add(searchParam);
 
             MySqlDataReader reader = command.ExecuteReader();
 

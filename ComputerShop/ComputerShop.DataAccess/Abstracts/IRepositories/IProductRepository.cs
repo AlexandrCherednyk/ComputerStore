@@ -3,7 +3,7 @@
 public interface IProductRepository
 {
     Task<Product> GetProductByIDAsync(int ID);
-    Task<List<Product>> GetProductsRangeAsync(int from, int to);
+    Task<List<Product>> GetProductsRangeAsync(int from, int to, string search);
     Task<long> GetProductsCountAsync();
     Task<int> AddProductAsync(Product product);
     Task UpdateProductAsync(Product product);

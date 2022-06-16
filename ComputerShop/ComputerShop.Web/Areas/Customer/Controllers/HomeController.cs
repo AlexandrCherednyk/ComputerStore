@@ -18,10 +18,15 @@ public class HomeController : Controller
         _reportRepository = reportRepository;
         _userRepository = userRepository;
     }
-    public async Task<IActionResult> Index(int page = 1)
+    public async Task<IActionResult> Index(int page = 1, string search = "")
     {
-        int pageSize = 3;
-        List<Product> productsPerPages = await _productRepository.GetProductsRangeAsync((page - 1) * pageSize, pageSize);
+        if(search is null)
+        {
+            search = "";
+        }
+
+        int pageSize = 15;
+        List<Product> productsPerPages = await _productRepository.GetProductsRangeAsync((page - 1) * pageSize, pageSize, search);
 
         PageInfo pageInfo = new()
         {
@@ -33,7 +38,8 @@ public class HomeController : Controller
         IndexViewModel ivm = new()
         {
             PageInfo = pageInfo,
-            Products = productsPerPages
+            Products = productsPerPages,
+            Search = search,
         };
 
         return View(ivm);

@@ -129,12 +129,13 @@ END;
 
 DROP PROCEDURE IF EXISTS `computer_store`.`get_product_range`;
 
-CREATE PROCEDURE `computer_store`.`get_product_range` (IN `from` INT, IN `to` INT)
+CREATE PROCEDURE `computer_store`.`get_product_range` (IN `from` INT, IN `to` INT, IN search VARCHAR(255))
 BEGIN 
 SELECT `Product`.`ID`, `Product`.`Name`, `Product`.`Description`, `Type`.`ID`, `Type`.`Name`, `Manufacturer`.`ID`, `Manufacturer`.`Name`, `Product`.`Price`, `Product`.`Count`, `Product`.`PathToFile`
 FROM `Product`
 JOIN `Type` ON `Product`.`TypeID` = `Type`.`ID`
 JOIN `Manufacturer` ON `Product`.`ManufacturerID` = `Manufacturer`.`ID`
+WHERE `Product`.`Name` LIKE CONCAT('%', search, '%') 
 ORDER BY `Product`.`ID`
 LIMIT `from`, `to`;
 END;
