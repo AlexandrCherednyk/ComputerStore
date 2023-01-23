@@ -74,5 +74,5 @@ CREATE TABLE `Characteristic` (
     Name VARCHAR(255),
     Value VARCHAR(255),
     PRIMARY KEY(ID),
-    Constraint fk_Characteristics_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID)
+    Constraint fk_Characteristics_Product FOREIGN KEY (ProductID) REFERENCES `Product` (ID) ON DELETE CASCADE
 );

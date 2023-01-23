@@ -32,7 +32,7 @@ public class InputController : Controller
     {
         Product product = await _productRepository.GetProductByIDAsync(productID);
 
-        if (ModelState.IsValid && quantity <= product.Count)
+        if (ModelState.IsValid && quantity > 0)
         {
             await _reportRepository.AddPurchasesAsync(productID, quantity);
 
@@ -47,6 +47,6 @@ public class InputController : Controller
             ModelState.AddModelError("", "Purchasing error.");
         }
 
-        return View("~/Areas/Customer/HomeController/Details.cshtml", product);
+        return View("../../Areas/Customer/HomeController/Details.cshtml", product);
     }
 }

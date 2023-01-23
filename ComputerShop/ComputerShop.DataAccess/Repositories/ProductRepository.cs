@@ -325,7 +325,7 @@ public class ProductRepository : IProductRepository
                 Value = product.Count,
             };
 
-            MySqlParameter pathToFIleParam = new()
+            MySqlParameter pathToFileParam = new()
             {
                 ParameterName = "pathToFile",
                 Value = product.PathToFile,
@@ -338,7 +338,7 @@ public class ProductRepository : IProductRepository
             command.Parameters.Add(manufacturerIDParam);
             command.Parameters.Add(priceParam);
             command.Parameters.Add(countParam);
-            command.Parameters.Add(pathToFIleParam);
+            command.Parameters.Add(pathToFileParam);
 
             await command.ExecuteScalarAsync();
         }

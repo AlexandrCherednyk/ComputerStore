@@ -13,6 +13,6 @@ INSERT INTO `computer_store`.`Type` (`Name`) VALUES ('Motherboard'), ('Processor
 UNLOCK TABLES;
 
 LOCK TABLES `Manufacturer` WRITE;
-INSERT INTO `computer_store`.`Manufacturer` (`Name`) VALUES ('Ukraine');
+INSERT INTO `computer_store`.`Manufacturer` (`Name`) VALUES ('Apple');
 UNLOCK TABLES;
 

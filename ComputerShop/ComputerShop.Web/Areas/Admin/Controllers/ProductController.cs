@@ -118,7 +118,7 @@ public class ProductController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Details(Product product, IFormFile image)
+    public async Task<IActionResult> Details(Product product, IFormFile? image)
     {
         if (ModelState.IsValid)
         {
@@ -145,6 +145,10 @@ public class ProductController : Controller
 
                 newProduct.PathToFile = @"\images\" + fileName + extension;
             }
+            else
+            {
+                newProduct.PathToFile = product.PathToFile;
+            }
             
             ProductType type = new()
             {
@@ -156,6 +160,7 @@ public class ProductController : Controller
                 ID = product.Manufacturer.ID,
             };
 
+            newProduct.ID = product.ID;
             newProduct.Name = product.Name;
             newProduct.Description = product.Description;
             newProduct.Type = type;
